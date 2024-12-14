@@ -1,4 +1,4 @@
-package OOP_HW_COSTAS_ERIC.OOP_HW_COSTAS_ERIC.genealogy;
+package OOP_HW_COSTAS_ERIC.genealogy;
 
 import java.util.List;
 import java.util.Scanner;
