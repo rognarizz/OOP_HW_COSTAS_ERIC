@@ -29,4 +29,3 @@ public class FamilyTree implements Serializable {
         return null;
     }
 }
-
