@@ -1,18 +1,23 @@
-package OOP_HW_COSTAS_ERIC.genealogy;
+package genealogy;
 
 import java.util.List;
 import java.util.Scanner;
+import java.io.IOException;
+
 
 public class GenealogyResearchApp {
     public static void main(String[] args) {
         FamilyTree familyTree = new FamilyTree();
+        FileOperations fileOperations = new FileOperationsImpl();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
             System.out.println("1. Add person");
             System.out.println("2. Add child to person");
             System.out.println("3. Get children of a person");
-            System.out.println("4. Exit");
+            System.out.println("4. Save family tree to file");
+            System.out.println("5. Load family tree from file");
+            System.out.println("6. Exit");
 
             int choice = scanner.nextInt();
             scanner.nextLine();  // Consume newline
@@ -24,7 +29,7 @@ public class GenealogyResearchApp {
                     System.out.print("Enter age: ");
                     int age = scanner.nextInt();
                     scanner.nextLine();  // Consume newline
-                    Person person = new Person(name, age); // Создание объекта Person
+                    Person person = new Person(name, age);
                     familyTree.addPerson(person);
                     break;
                 case 2:
@@ -37,7 +42,7 @@ public class GenealogyResearchApp {
                     scanner.nextLine();  // Consume newline
                     Person parent = familyTree.getPerson(parentName);
                     if (parent != null) {
-                        Person child = new Person(childName, childAge); // Создание объекта Person для ребенка
+                        Person child = new Person(childName, childAge);
                         parent.addChild(child);
                     } else {
                         System.out.println("Parent not found.");
@@ -58,6 +63,26 @@ public class GenealogyResearchApp {
                     }
                     break;
                 case 4:
+                    System.out.print("Enter file name: ");
+                    String saveFileName = scanner.nextLine();
+                    try {
+                        fileOperations.saveToFile(familyTree, saveFileName);
+                        System.out.println("Family tree saved to file.");
+                    } catch (IOException e) {
+                        System.out.println("Error saving to file: " + e.getMessage());
+                    }
+                    break;
+                case 5:
+                    System.out.print("Enter file name: ");
+                    String loadFileName = scanner.nextLine();
+                    try {
+                        familyTree = fileOperations.loadFromFile(loadFileName);
+                        System.out.println("Family tree loaded from file.");
+                    } catch (IOException | ClassNotFoundException e) {
+                        System.out.println("Error loading from file: " + e.getMessage());
+                    }
+                    break;
+                case 6:
                     scanner.close();
                     System.out.println("Goodbye!");
                     return;
@@ -68,4 +93,3 @@ public class GenealogyResearchApp {
         }
     }
 }
-

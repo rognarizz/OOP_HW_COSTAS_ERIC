@@ -1,10 +1,12 @@
-package OOP_HW_COSTAS_ERIC.genealogy;
+package genealogy;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FamilyTree {
+public class FamilyTree implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Map<String, Person> familyTree;
 
     public FamilyTree() {
