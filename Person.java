@@ -1,4 +1,4 @@
-package genealogy;
+package GENEALOGY_OOP.genealogy;
 
 import java.io.Serializable;
 import java.util.ArrayList;
