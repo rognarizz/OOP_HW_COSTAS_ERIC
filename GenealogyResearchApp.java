@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.IOException;
 
-
 public class GenealogyResearchApp {
     public static void main(String[] args) {
         FamilyTree familyTree = new FamilyTree();
@@ -17,7 +16,10 @@ public class GenealogyResearchApp {
             System.out.println("3. Get children of a person");
             System.out.println("4. Save family tree to file");
             System.out.println("5. Load family tree from file");
-            System.out.println("6. Exit");
+            System.out.println("6. Sort family by name");
+            System.out.println("7. Sort family by age");
+            System.out.println("8. Display all families");
+            System.out.println("9. Exit");
 
             int choice = scanner.nextInt();
             scanner.nextLine();  // Consume newline
@@ -83,6 +85,20 @@ public class GenealogyResearchApp {
                     }
                     break;
                 case 6:
+                    familyTree.sortFamilyByName();
+                    System.out.println("Family tree sorted by name.");
+                    break;
+                case 7:
+                    familyTree.sortFamilyByAge();
+                    System.out.println("Family tree sorted by age.");
+                    break;
+                case 8:
+                    System.out.println("All families in the family tree:");
+                    for (Person p : familyTree) {
+                        System.out.println(p);
+                    }
+                    break;
+                case 9:
                     scanner.close();
                     System.out.println("Goodbye!");
                     return;
