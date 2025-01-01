@@ -7,45 +7,47 @@ import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class FamilyTree implements Serializable, Iterable<Person> {
+public class FamilyTree<T> implements Serializable, Iterable<T> {
     private static final long serialVersionUID = 1L;
-    private List<Person> familyTree;
+    private List<T> familyTree;
 
     public FamilyTree() {
         familyTree = new ArrayList<>();
     }
 
-    public void addPerson(Person person) {
+    public void addPerson(T person) {
         familyTree.add(person);
     }
 
-    public Person getPerson(String name) {
-        for (Person person : familyTree) {
-            if (person.getName().equals(name)) {
+    public T getPerson(String name, NameMatcher<T> matcher) {
+        for (T person : familyTree) {
+            if (matcher.match(person, name)) {
                 return person;
             }
         }
         return null; // Если человек с таким именем не найден
     }
 
-    public List<Person> getChildren(String name) {
-        Person person = getPerson(name);
-        if (person != null) {
-            return person.getChildren();
-        }
-        return null; // Если человек с таким именем не найден
+    public List<T> getChildren(T person, ChildrenRetriever<T> retriever) {
+        return retriever.getChildren(person);
     }
 
-    public void sortFamilyByName() {
-        Collections.sort(familyTree, Comparator.comparing(Person::getName));
-    }
-
-    public void sortFamilyByAge() {
-        Collections.sort(familyTree, Comparator.comparing(Person::getAge));
+    public void sortFamily(Comparator<T> comparator) {
+        Collections.sort(familyTree, comparator);
     }
 
     @Override
-    public Iterator<Person> iterator() {
+    public Iterator<T> iterator() {
         return familyTree.iterator();
     }
+}
+
+// Интерфейс для сравнения имен
+interface NameMatcher<T> {
+    boolean match(T person, String name);
+}
+
+// Интерфейс для получения детей
+interface ChildrenRetriever<T> {
+    List<T> getChildren(T person);
 }

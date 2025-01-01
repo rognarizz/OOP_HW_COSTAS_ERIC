@@ -1,13 +1,14 @@
 package GENEALOGY_OOP.genealogy;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.io.IOException;
 
 public class GenealogyResearchApp {
     public static void main(String[] args) {
-        FamilyTree familyTree = new FamilyTree();
-        FileOperations fileOperations = new FileOperationsImpl();
+        FamilyTree<Person> familyTree = new FamilyTree<>();
+        FileOperations<Person> fileOperations = new FileOperationsImpl<>();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -42,7 +43,7 @@ public class GenealogyResearchApp {
                     System.out.print("Enter child age: ");
                     int childAge = scanner.nextInt();
                     scanner.nextLine();  // Consume newline
-                    Person parent = familyTree.getPerson(parentName);
+                    Person parent = familyTree.getPerson(parentName, new PersonNameMatcher());
                     if (parent != null) {
                         Person child = new Person(childName, childAge);
                         parent.addChild(child);
@@ -53,9 +54,9 @@ public class GenealogyResearchApp {
                 case 3:
                     System.out.print("Enter name: ");
                     String personName = scanner.nextLine();
-                    Person targetPerson = familyTree.getPerson(personName);
+                    Person targetPerson = familyTree.getPerson(personName, new PersonNameMatcher());
                     if (targetPerson != null) {
-                        List<Person> children = targetPerson.getChildren();
+                        List<Person> children = familyTree.getChildren(targetPerson, new PersonChildrenRetriever());
                         System.out.println(targetPerson.getName() + "'s children:");
                         for (Person child : children) {
                             System.out.println(child.getName());
@@ -85,11 +86,11 @@ public class GenealogyResearchApp {
                     }
                     break;
                 case 6:
-                    familyTree.sortFamilyByName();
+                    familyTree.sortFamily(Comparator.comparing(Person::getName));
                     System.out.println("Family tree sorted by name.");
                     break;
                 case 7:
-                    familyTree.sortFamilyByAge();
+                    familyTree.sortFamily(Comparator.comparingInt(Person::getAge));
                     System.out.println("Family tree sorted by age.");
                     break;
                 case 8:
@@ -107,5 +108,21 @@ public class GenealogyResearchApp {
                     break;
             }
         }
+    }
+}
+
+// Класс для сопоставления имен Person
+class PersonNameMatcher implements NameMatcher<Person> {
+    @Override
+    public boolean match(Person person, String name) {
+        return person.getName().equals(name);
+    }
+}
+
+// Класс для получения детей Person
+class PersonChildrenRetriever implements ChildrenRetriever<Person> {
+    @Override
+    public List<Person> getChildren(Person person) {
+        return person.getChildren();
     }
 }
