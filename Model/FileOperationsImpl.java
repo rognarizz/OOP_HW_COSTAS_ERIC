@@ -1,4 +1,4 @@
-package GENEALOGY_OOP.genealogy;
+package GENEALOGY_OOP.genealogy.Model;
 
 import java.io.*;
 
