@@ -8,25 +8,25 @@ public class ConsoleTreeView implements MenuView, PersonView, ChildrenView, Fami
 
     @Override
     public void displayMenu() {
-        System.out.println("1. Добавить человека");
-        System.out.println("2. Добавить ребенка к человеку");
-        System.out.println("3. Получить детей человека");
-        System.out.println("4. Сохранить семейное дерево в файл");
-        System.out.println("5. Загрузить семейное дерево из файла");
-        System.out.println("6. Отсортировать семейное дерево по имени");
-        System.out.println("7. Отсортировать семейное дерево по возрасту");
-        System.out.println("8. Показать все семьи");
-        System.out.println("9. Выйти");
+        System.out.println("1. Add person");
+        System.out.println("2. Add child to person");
+        System.out.println("3. Get children of a person");
+        System.out.println("4. Save family tree to file");
+        System.out.println("5. Load family tree from file");
+        System.out.println("6. Sort family by name");
+        System.out.println("7. Sort family by age");
+        System.out.println("8. Display all families");
+        System.out.println("9. Exit");
     }
 
     @Override
     public void showPerson(Person person) {
-        System.out.println("Человек: " + person);
+        System.out.println("Person: " + person);
     }
 
     @Override
     public void showChildren(List<Person> children) {
-        System.out.println("Дети:");
+        System.out.println("Children:");
         for (Person child : children) {
             System.out.println(child);
         }
@@ -34,7 +34,7 @@ public class ConsoleTreeView implements MenuView, PersonView, ChildrenView, Fami
 
     @Override
     public void showAllFamilies(FamilyTree<Person> familyTree) {
-        System.out.println("Все семьи в семейном дереве:");
+        System.out.println("All families in the family tree:");
         for (Person person : familyTree) {
             System.out.println(person);
         }

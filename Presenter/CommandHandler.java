@@ -1,6 +1,7 @@
 package GENEALOGY_OOP.genealogy.Presenter;
 
 import GENEALOGY_OOP.genealogy.View.MenuView;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CommandHandler {
@@ -17,7 +18,7 @@ public class CommandHandler {
     public void run() {
         while (true) {
             view.displayMenu();
-            int choice = scanner.nextInt();
+            int choice = getIntInput();
             scanner.nextLine(); // Consume newline
 
             switch (choice) {
@@ -60,8 +61,7 @@ public class CommandHandler {
         System.out.print("Enter name: ");
         String name = scanner.nextLine();
         System.out.print("Enter age: ");
-        int age = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        int age = getIntInput();
         presenter.addPerson(name, age);
     }
 
@@ -71,8 +71,7 @@ public class CommandHandler {
         System.out.print("Enter child name: ");
         String childName = scanner.nextLine();
         System.out.print("Enter child age: ");
-        int childAge = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        int childAge = getIntInput();
         presenter.addChildToPerson(parentName, childName, childAge);
     }
 
@@ -104,5 +103,16 @@ public class CommandHandler {
 
     private void displayAllFamilies() {
         presenter.displayAllFamilies();
+    }
+
+    private int getIntInput() {
+        while (true) {
+            try {
+                return scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid number:");
+                scanner.next(); // Discard invalid input
+            }
+        }
     }
 }
