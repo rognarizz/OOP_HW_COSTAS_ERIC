@@ -1,30 +1,22 @@
-package GENEALOGY_OOP.genealogy.MainApplication;
+package GENEALOGY_OOP.genealogy.Presenter;
 
-import java.util.List;
+import GENEALOGY_OOP.genealogy.View.MenuView;
 import java.util.Scanner;
 
-import GENEALOGY_OOP.genealogy.Model.FamilyTree;
-import GENEALOGY_OOP.genealogy.Model.Person;
-import GENEALOGY_OOP.genealogy.Presenter.GenealogyPresenter;
-import GENEALOGY_OOP.genealogy.View.GenealogyView;
-
-public class GenealogyResearchApp implements GenealogyView {
+public class CommandHandler {
     private GenealogyPresenter presenter;
+    private MenuView view;
     private Scanner scanner;
 
-    public GenealogyResearchApp() {
-        presenter = new GenealogyPresenter(this);
-        scanner = new Scanner(System.in);
-    }
-
-    public static void main(String[] args) {
-        GenealogyResearchApp app = new GenealogyResearchApp();
-        app.run();
+    public CommandHandler(GenealogyPresenter presenter, MenuView view) {
+        this.presenter = presenter;
+        this.view = view;
+        this.scanner = new Scanner(System.in);
     }
 
     public void run() {
         while (true) {
-            displayMenu();
+            view.displayMenu();
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
@@ -113,44 +105,4 @@ public class GenealogyResearchApp implements GenealogyView {
     private void displayAllFamilies() {
         presenter.displayAllFamilies();
     }
-
-    @Override
-    public void displayMenu() {
-        System.out.println("1. Add person");
-        System.out.println("2. Add child to person");
-        System.out.println("3. Get children of a person");
-        System.out.println("4. Save family tree to file");
-        System.out.println("5. Load family tree from file");
-        System.out.println("6. Sort family by name");
-        System.out.println("7. Sort family by age");
-        System.out.println("8. Display all families");
-        System.out.println("9. Exit");
-    }
-
-    @Override
-    public void showPerson(Person person) {
-        System.out.println("Person: " + person);
-    }
-
-    @Override
-    public void showChildren(List<Person> children) {
-        System.out.println("Children:");
-        for (Person child : children) {
-            System.out.println(child);
-        }
-    }
-
-    @Override
-    public void showAllFamilies(FamilyTree<Person> familyTree) {
-        System.out.println("All families in the family tree:");
-        for (Person person : familyTree) {
-            System.out.println(person);
-        }
-    }
-
-    @Override
-    public void showMessage(String message) {
-        System.out.println(message);
-    }
-
 }

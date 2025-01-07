@@ -5,12 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Person implements Serializable {
-    private static final long serialVersionUID = 1L;
     private String name;
     private int age;
     private List<Person> children;
-    private transient Person mother;
-    private transient Person father;
 
     public Person(String name, int age) {
         this.name = name;
@@ -26,24 +23,16 @@ public class Person implements Serializable {
         return age;
     }
 
-    public List<Person> getChildren() {
-        return children;
-    }
-
     public void addChild(Person child) {
         children.add(child);
     }
 
-    public Person getMother() {
-        return mother;
-    }
-
-    public Person getFather() {
-        return father;
+    public List<Person> getChildren() {
+        return children;
     }
 
     @Override
     public String toString() {
-        return "Person{name='" + name + "', age=" + age + "}";
+        return "Name: " + name + ", Age: " + age + ", Children: " + children.size();
     }
 }

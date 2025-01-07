@@ -1,53 +1,41 @@
 package GENEALOGY_OOP.genealogy.Model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Collections;
-import java.util.Comparator;
 
-public class FamilyTree<T> implements Serializable, Iterable<T> {
-    private static final long serialVersionUID = 1L;
-    private List<T> familyTree;
+public class FamilyTree<T>  implements Iterable<T> {
+    private List<T> members;
 
     public FamilyTree() {
-        familyTree = new ArrayList<>();
+        this.members = new ArrayList<>();
     }
 
     public void addPerson(T person) {
-        familyTree.add(person);
+        members.add(person);
     }
 
-    public T getPerson(String name, NameMatcher<T> matcher) {
-        for (T person : familyTree) {
-            if (matcher.match(person, name)) {
-                return person;
+    public T getPerson(String name, PersonNameMatcher matcher) {
+        for (T member : members) {
+            if (matcher.matches((Person) member, name)) {
+                return member;
             }
         }
-        return null; // Если человек с таким именем не найден
+        return null;
     }
 
-    public List<T> getChildren(T person, ChildrenRetriever<T> retriever) {
-        return retriever.getChildren(person);
+    @SuppressWarnings("unchecked")
+    public List<T> getChildren(T person, PersonChildrenRetriever retriever) {
+        return (List<T>) retriever.retrieveChildren((Person) person);
     }
 
     public void sortFamily(Comparator<T> comparator) {
-        Collections.sort(familyTree, comparator);
+        members.sort(comparator);
     }
 
     @Override
     public Iterator<T> iterator() {
-        return familyTree.iterator();
+        return members.iterator();
     }
-}
-
-// Интерфейс для сравнения имен
-interface NameMatcher<T> {
-    boolean match(T person, String name);
-}
-
-// Интерфейс для получения детей
-interface ChildrenRetriever<T> {
-    List<T> getChildren(T person);
 }
