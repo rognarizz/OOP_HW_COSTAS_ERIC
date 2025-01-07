@@ -10,7 +10,6 @@ import GENEALOGY_OOP.genealogy.View.*;
 public class GenealogyPresenter {
     private FamilyTree<Person> familyTree;
     private FileOperations<Person> fileOperations;
-    private PersonView personView;
     private MessageView messageView;
     private ChildrenView childrenView;
     private FamilyTreeView familyTreeView;
@@ -18,7 +17,6 @@ public class GenealogyPresenter {
     public GenealogyPresenter(FileOperations<Person> fileOperations, PersonView personView, MessageView messageView, ChildrenView childrenView, FamilyTreeView familyTreeView) {
         this.familyTree = new FamilyTree<>();
         this.fileOperations = fileOperations;
-        this.personView = personView;
         this.messageView = messageView;
         this.childrenView = childrenView;
         this.familyTreeView = familyTreeView;
